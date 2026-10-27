@@ -1,780 +1,492 @@
 <!DOCTYPE html>
-<html lang="es">
+<html lang="es" class="dark scroll-smooth">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-<meta name="referrer" content="strict-origin-when-cross-origin">
-
-<title>R7 ACADEMY | Curso de Inteligencia Artificial</title>
-
-<style>
-:root {
-  --fondo: #061810;
-  --panel: #102d20;
-  --verde: #4ade80;
-  --verdeOscuro: #15803d;
-  --texto: #f0fdf4;
-  --gris: #b4cbbd;
-  --borde: #28543a;
-}
-
-* {
-  box-sizing: border-box;
-}
-
-html {
-  scroll-behavior: smooth;
-}
-
-body {
-  margin: 0;
-  font-family: Arial, Helvetica, sans-serif;
-  background: var(--fondo);
-  color: var(--texto);
-}
-
-button, input, textarea, select {
-  font: inherit;
-}
-
-button {
-  background: var(--verdeOscuro);
-  color: white;
-  border: none;
-  border-radius: 10px;
-  padding: 13px 20px;
-  font-weight: bold;
-  cursor: pointer;
-  transition: .2s;
-}
-
-button:hover:not(:disabled) {
-  background: #16a34a;
-}
-
-button:disabled {
-  background: #365448;
-  color: #a1b4a8;
-  cursor: not-allowed;
-}
-
-input, textarea, select {
-  width: 100%;
-  padding: 14px;
-  margin: 10px 0 17px;
-  border: 1px solid var(--borde);
-  border-radius: 10px;
-  background: #081d13;
-  color: white;
-  outline: none;
-}
-
-input:focus, textarea:focus, select:focus {
-  border-color: var(--verde);
-}
-
-h1, h2, h3 {
-  line-height: 1.3;
-}
-
-p {
-  color: var(--gris);
-  line-height: 1.6;
-}
-
-[hidden] {
-  display: none !important;
-}
-
-/* INICIO DE SESIÓN */
-
-#loginScreen {
-  min-height: 100vh;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  padding: 20px;
-  background: radial-gradient(circle at top, #174d2c, #061810 65%);
-}
-
-.login-box {
-  width: 100%;
-  max-width: 430px;
-  background: var(--panel);
-  border: 1px solid var(--borde);
-  border-radius: 20px;
-  padding: 35px;
-  box-shadow: 0 20px 55px #0008;
-}
-
-.logo {
-  color: var(--verde);
-  font-size: 27px;
-  font-weight: 800;
-  letter-spacing: 1px;
-}
-
-.login-box .logo,
-.login-box h2,
-.login-subtitle {
-  text-align: center;
-}
-
-.login-box label {
-  color: #dcfce7;
-  font-size: 14px;
-}
-
-.login-box button {
-  width: 100%;
-  background: #16a34a;
-}
-
-.error {
-  color: #fda4af;
-  text-align: center;
-  min-height: 20px;
-  font-size: 14px;
-}
-
-/* PANEL */
-
-header {
-  background: #0c2418;
-  border-bottom: 1px solid var(--borde);
-  padding: 20px 5%;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  gap: 15px;
-}
-
-header .logo {
-  font-size: 21px;
-}
-
-.logout {
-  background: #9f2424;
-}
-
-.container {
-  max-width: 1150px;
-  margin: auto;
-  padding: 30px 20px;
-}
-
-.hero {
-  background: linear-gradient(120deg, #14532d, #0c2c1d);
-  border: 1px solid #287846;
-  padding: 35px;
-  border-radius: 20px;
-  margin-bottom: 30px;
-}
-
-.hero h1 {
-  font-size: clamp(25px, 4vw, 38px);
-}
-
-.hero p {
-  color: #d1fae5;
-}
-
-.tag {
-  display: inline-block;
-  background: #1f6c3c;
-  color: #dcfce7;
-  padding: 8px 14px;
-  border-radius: 30px;
-  font-size: 13px;
-  font-weight: bold;
-}
-
-/* PROGRESO */
-
-.progress-box {
-  background: var(--panel);
-  border: 1px solid var(--borde);
-  border-radius: 17px;
-  padding: 25px;
-  margin-bottom: 35px;
-}
-
-.progress {
-  height: 14px;
-  background: #31513d;
-  border-radius: 20px;
-  overflow: hidden;
-}
-
-#progressBar {
-  width: 0%;
-  height: 100%;
-  background: linear-gradient(90deg, #16a34a, #86efac);
-  transition: width .3s;
-}
-
-/* PANEL DE ADMINISTRADOR */
-
-.admin-box {
-  background: var(--panel);
-  border: 2px dashed var(--verde);
-  border-radius: 17px;
-  padding: 25px;
-  margin-bottom: 35px;
-}
-
-.admin-box h2 {
-  color: var(--verde);
-  margin-top: 0;
-}
-
-/* MÓDULOS */
-
-.grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
-  gap: 20px;
-  margin-top: 25px;
-}
-
-.card {
-  background: var(--panel);
-  border: 1px solid var(--borde);
-  border-radius: 17px;
-  padding: 25px;
-  transition: .2s;
-  position: relative;
-}
-
-.card:not(.locked):hover {
-  border-color: var(--verde);
-  transform: translateY(-3px);
-}
-
-.card h3 {
-  color: #bbf7d0;
-}
-
-.card button {
-  width: 100%;
-  margin-top: 12px;
-}
-
-.card-icon {
-  font-size: 34px;
-}
-
-.locked {
-  opacity: .62;
-}
-
-.status {
-  font-weight: bold;
-  font-size: 14px;
-}
-
-.available {
-  color: #4ade80;
-}
-
-.blocked {
-  color: #fca5a5;
-}
-
-.delete-btn {
-  background: #7f1d1d;
-  margin-top: 8px;
-}
-
-.delete-btn:hover {
-  background: #991b1b;
-}
-
-/* REPRODUCTOR */
-
-#lessonSection {
-  background: var(--panel);
-  border: 1px solid var(--borde);
-  border-radius: 17px;
-  padding: 25px;
-  margin-top: 35px;
-}
-
-#lessonSection h2 {
-  color: #bbf7d0;
-}
-
-.video-wrapper {
-  position: relative;
-  width: 100%;
-  aspect-ratio: 16 / 9;
-  background: #000;
-  border-radius: 12px;
-  overflow: hidden;
-  margin: 20px 0;
-}
-
-.video-wrapper iframe, .video-wrapper video {
-  position: absolute;
-  inset: 0;
-  width: 100%;
-  height: 100%;
-  border: 0;
-  object-fit: contain;
-}
-
-.video-notice {
-  font-size: 13px;
-  color: #b4cbbd;
-  margin-bottom: 20px;
-}
-
-.complete-btn {
-  background: #16a34a;
-}
-
-footer {
-  text-align: center;
-  padding: 30px;
-  color: #94b4a0;
-  border-top: 1px solid var(--borde);
-  margin-top: 35px;
-}
-
-@media(max-width: 600px) {
-  .login-box { padding: 25px; }
-  .hero { padding: 23px; }
-  header .logo { font-size: 18px; }
-  .container { padding: 20px 15px; }
-  #lessonSection { padding: 15px; }
-}
-</style>
-</head>
-
-<body>
-
-<!-- INICIO DE SESIÓN -->
-<section id="loginScreen">
-  <div class="login-box">
-    <div class="logo">🎓 R7 ACADEMY</div>
-    <p class="login-subtitle">Aprende a crear videos con Inteligencia Artificial</p>
-    <h2>Iniciar sesión</h2>
-    <form id="loginForm">
-      <label for="username">Usuario</label>
-      <input id="username" type="text" placeholder="Introduce tu usuario" autocomplete="username" required>
-      <label for="password">Contraseña</label>
-      <input id="password" type="password" placeholder="Introduce tu contraseña" autocomplete="current-password" required>
-      <p id="loginError" class="error" role="alert"></p>
-      <button type="submit">ENTRAR A MI CURSO</button>
-    </form>
-  </div>
-</section>
-
-<!-- PANEL PRINCIPAL -->
-<div id="studentPanel" hidden>
-  <header>
-    <div class="logo">🎓 R7 ACADEMY</div>
-    <button class="logout" onclick="logout()">Cerrar sesión</button>
-  </header>
-
-  <main class="container">
-    <section class="hero">
-      <span class="tag">CURSO DE INTELIGENCIA ARTIFICIAL</span>
-      <h1>Crea Videos con IA y Aprende a Ganar Dinero</h1>
-      <p>Aprende a crear canales, guiones, imágenes, videos profesionales y contenido para YouTube, TikTok y otras plataformas.</p>
-      <p id="welcome"></p>
-    </section>
-
-    <!-- PANEL DE ADMINISTRADOR PARA SUBIR MÓDULOS -->
-    <section id="adminSection" class="admin-box" hidden>
-      <h2>🛠️ Panel de Administración (Crear / Subir Módulo)</h2>
-      <p>Añade un nuevo módulo. Puedes subir un archivo de video local o pegar un enlace de YouTube.</p>
-      <form id="addModuleForm">
-        <label for="newTitle">Nombre / Título del Módulo</label>
-        <input id="newTitle" type="text" placeholder="Ej: Módulo 1: Introducción a la IA" required>
-
-        <label for="newDesc">Descripción de la Clase</label>
-        <textarea id="newDesc" rows="3" placeholder="Escribe el contenido o resumen del módulo..." required></textarea>
-
-        <label for="videoSource">Tipo de Video</label>
-        <select id="videoSource" onchange="toggleVideoInput()">
-          <option value="file">Subir Archivo de Video desde mi PC</option>
-          <option value="youtube">Enlace de YouTube</option>
-        </select>
-
-        <div id="fileInputGroup">
-          <label for="newVideoFile">Seleccionar Archivo de Video (.mp4, .webm, etc.)</label>
-          <input id="newVideoFile" type="file" accept="video/*">
-        </div>
-
-        <div id="youtubeInputGroup" hidden>
-          <label for="newVideoUrl">Enlace de YouTube</label>
-          <input id="newVideoUrl" type="text" placeholder="https://www.youtube.com/watch?v=...">
-        </div>
-
-        <button type="submit" id="submitModuleBtn">🚀 Publicar Módulo</button>
-      </form>
-    </section>
-
-    <!-- PROGRESO -->
-    <section class="progress-box">
-      <h2>📊 Mi progreso</h2>
-      <p id="progressText">0 de 0 módulos completados</p>
-      <div class="progress">
-        <div id="progressBar"></div>
-      </div>
-      <p id="progressPercent">0%</p>
-    </section>
-
-    <!-- MÓDULOS -->
-    <h2>📚 Contenido del curso</h2>
-    <div id="moduleGrid" class="grid"></div>
-
-    <!-- CLASE -->
-    <section id="lessonSection" hidden>
-      <button onclick="closeLesson()">← Volver a los módulos</button>
-      <h2 id="lessonTitle"></h2>
-      <p id="lessonDescription"></p>
-      <div id="videoContainer"></div>
-      <p class="video-notice">▶ Reproduce tu clase aquí mismo en R7 ACADEMY.</p>
-      <button id="completeButton" class="complete-btn" onclick="completeModule()">✅ Marcar como completado</button>
-    </section>
-  </main>
-
-  <footer>
-    © 2026 R7 ACADEMY | Todos los derechos reservados
-  </footer>
-</div>
-
-<script>
-const accounts = {
-  "203031": "203031", // ADMINISTRADOR
-  "2020": "2020", "2021": "2021", "2022": "2022", "2023": "2023", "2024": "2024",
-  "2025": "2025", "2026": "2026", "2027": "2027", "2028": "2028", "2029": "2029",
-  "2030": "2030", "2031": "2031", "2032": "2032", "2033": "2033", "2034": "2034",
-  "2035": "2035", "2036": "2036", "2037": "2037", "2038": "2038", "2039": "2039"
-};
-
-// Cargar módulos guardados (Inicia sin ningún módulo por defecto)
-let modules = [];
-try {
-  const savedModules = localStorage.getItem("r7_global_modules");
-  modules = savedModules ? JSON.parse(savedModules) : [];
-} catch (e) {
-  modules = [];
-}
-
-let currentUser = null;
-let completed = [];
-let selectedModule = null;
-
-function toggleVideoInput() {
-  const source = document.getElementById("videoSource").value;
-  if (source === "file") {
-    document.getElementById("fileInputGroup").hidden = false;
-    document.getElementById("youtubeInputGroup").hidden = true;
-  } else {
-    document.getElementById("fileInputGroup").hidden = true;
-    document.getElementById("youtubeInputGroup").hidden = false;
-  }
-}
-
-function getYouTubeId(link) {
-  if (!link || typeof link !== "string") return null;
-  try {
-    const url = new URL(link.trim());
-    const hostname = url.hostname.toLowerCase();
-    let id = null;
-
-    if (hostname.includes("youtube.com") || hostname.includes("youtube-nocookie.com")) {
-      if (url.pathname === "/watch") {
-        id = url.searchParams.get("v");
-      } else {
-        const parts = url.pathname.split("/");
-        if (["shorts", "embed", "live"].includes(parts[1])) {
-          id = parts[2];
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>R7 ACADEMY - Formación Profesional</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- FontAwesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Google Fonts Inter & Outfit -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;700;900&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                        heading: ['Outfit', 'sans-serif'],
+                    },
+                    colors: {
+                        neon: {
+                            400: '#34d399',
+                            500: '#10b981',
+                            600: '#059669',
+                            glow: '#00ff87',
+                        },
+                        dark: {
+                            950: '#080c14',
+                            900: '#0f172a',
+                            800: '#1e293b',
+                            700: '#334155',
+                        }
+                    },
+                    boxShadow: {
+                        'neon-glow': '0 0 25px -5px rgba(16, 185, 129, 0.4)',
+                        'neon-card': '0 10px 30px -10px rgba(0, 255, 135, 0.15)',
+                    }
+                }
+            }
         }
-      }
-    } else if (hostname.includes("youtu.be")) {
-      id = url.pathname.split("/")[1];
-    }
+    </script>
+    <style>
+        body {
+            background-color: #080c14;
+            color: #f8fafc;
+            font-family: 'Inter', sans-serif;
+        }
+        h1, h2, h3, h4, h5, h6 {
+            font-family: 'Outfit', sans-serif;
+        }
+        .neon-border {
+            border: 1px solid rgba(16, 185, 129, 0.3);
+        }
+        .neon-border-hover:hover {
+            border-color: #10b981;
+            box-shadow: 0 0 20px rgba(16, 185, 129, 0.25);
+        }
+        .card-glass {
+            background: linear-gradient(135deg, rgba(30, 41, 59, 0.7) 0%, rgba(15, 23, 42, 0.85) 100%);
+            backdrop-filter: blur(12px);
+        }
+        .green-gradient-text {
+            background: linear-gradient(135deg, #00ff87 0%, #60efff 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        .custom-scrollbar::-webkit-scrollbar {
+            width: 6px;
+        }
+        .custom-scrollbar::-webkit-scrollbar-track {
+            background: #0f172a;
+        }
+        .custom-scrollbar::-webkit-scrollbar-thumb {
+            background: #10b981;
+            border-radius: 4px;
+        }
+    </style>
+</head>
+<body class="min-h-screen flex flex-col custom-scrollbar">
 
-    return (id && /^[a-zA-Z0-9_-]{11}$/.test(id)) ? id : null;
-  } catch (e) {
-    return null;
-  }
-}
+    <!-- Top Glow Bar -->
+    <div class="h-1 bg-gradient-to-r from-emerald-500 via-green-400 to-teal-500 w-full shadow-neon-glow"></div>
 
-document.getElementById("loginForm").addEventListener("submit", function(event) {
-  event.preventDefault();
-  const user = document.getElementById("username").value.trim();
-  const password = document.getElementById("password").value;
+    <!-- Header / Navbar -->
+    <header class="sticky top-0 z-40 bg-dark-950/90 backdrop-blur-md border-b border-slate-800/80">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center h-20">
+                <!-- Logo R7 ACADEMY -->
+                <div class="flex items-center space-x-3 cursor-pointer" onclick="window.scrollTo({top:0, behavior:'smooth'})">
+                    <div class="bg-gradient-to-br from-emerald-500 to-green-700 text-black p-3 rounded-2xl shadow-neon-glow font-black text-2xl tracking-tighter flex items-center justify-center w-12 h-12">
+                        R7
+                    </div>
+                    <div>
+                        <span class="text-2xl font-black text-white tracking-wider block leading-none">
+                            R7<span class="text-neon-500">.ACADEMY</span>
+                        </span>
+                        <span class="text-[10px] uppercase font-semibold text-emerald-400 tracking-widest block mt-0.5">Aprende • Domina • Emprende</span>
+                    </div>
+                </div>
 
-  if (!accounts[user] || accounts[user] !== password) {
-    document.getElementById("loginError").textContent = "Usuario o contraseña incorrectos.";
-    return;
-  }
+            </div>
+        </div>
+    </header>
 
-  currentUser = user;
-  try {
-    const saved = JSON.parse(localStorage.getItem("r7_progress_" + user) || "[]");
-    completed = Array.isArray(saved) ? saved.filter(n => Number.isInteger(n)) : [];
-  } catch (e) {
-    completed = [];
-  }
+    <!-- Hero Section -->
+    <section class="relative bg-dark-950 text-white py-16 px-4 sm:px-6 lg:px-8 border-b border-slate-800/60 overflow-hidden">
+        <!-- Luces de fondo estilo Neón -->
+        <div class="absolute top-0 left-1/2 -translate-x-1/2 w-96 h-96 bg-emerald-500/10 rounded-full blur-3xl pointer-events-none"></div>
+        <div class="absolute bottom-0 right-10 w-80 h-80 bg-teal-500/10 rounded-full blur-3xl pointer-events-none"></div>
 
-  document.getElementById("loginError").textContent = "";
-  document.getElementById("loginScreen").hidden = true;
-  document.getElementById("studentPanel").hidden = false;
-  document.getElementById("welcome").textContent = "👤 Estudiante: " + user;
+        <div class="max-w-5xl mx-auto text-center relative z-10">
+            <span class="inline-flex items-center gap-2 bg-emerald-950/80 text-emerald-400 text-xs font-extrabold px-4 py-1.5 rounded-full border border-emerald-500/30 uppercase tracking-widest mb-6">
+                <span class="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
+                Plataforma Oficial R7 ACADEMY
+            </span>
+            <h1 class="text-4xl sm:text-6xl font-black tracking-tight leading-tight mb-6">
+                Aprende Habilidades de Alto Valor en <span class="green-gradient-text">Verdadero Tiempo Real</span>
+            </h1>
+            <p class="text-slate-400 text-base sm:text-lg mb-10 max-w-3xl mx-auto leading-relaxed">
+                Elige tu especialidad, consulta la ficha técnica completa del profesor y contenido, y unite de inmediato vía comunicación directa por WhatsApp.
+            </p>
 
-  if (currentUser === "203031") {
-    document.getElementById("adminSection").hidden = false;
-  } else {
-    document.getElementById("adminSection").hidden = true;
-  }
+            <!-- Search & Filters -->
+            <div class="card-glass p-3 rounded-2xl border border-slate-800 shadow-2xl max-w-3xl mx-auto flex flex-col sm:flex-row gap-3">
+                <div class="relative flex-1">
+                    <i class="fa-solid fa-magnifying-glass absolute left-4 top-1/2 -translate-y-1/2 text-slate-500"></i>
+                    <input type="text" id="searchInput" onkeyup="filterCourses()" placeholder="¿Qué curso te gustaría aprender?" class="w-full pl-11 pr-4 py-3 rounded-xl bg-dark-900 text-white placeholder-slate-500 border border-slate-700/80 focus:outline-none focus:border-emerald-500 text-sm">
+                </div>
+                <select id="categoryFilter" onchange="filterCourses()" class="px-4 py-3 rounded-xl text-slate-200 bg-dark-900 border border-slate-700/80 text-sm font-semibold focus:outline-none focus:border-emerald-500">
+                    <option value="all">Todas las Categorías</option>
+                    <option value="Programación">Programación</option>
+                    <option value="Diseño">Diseño & UX</option>
+                    <option value="Marketing">Marketing Digital</option>
+                    <option value="Negocios">Negocios</option>
+                </select>
+            </div>
+        </div>
+    </section>
 
-  renderModules();
-  window.scrollTo(0, 0);
-});
+    <!-- Main Content / Cursos Grid -->
+    <main class="flex-grow max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 w-full">
+        <div class="flex flex-col sm:flex-row justify-between sm:items-center gap-4 mb-8">
+            <div>
+                <h2 class="text-2xl sm:text-3xl font-extrabold text-white tracking-tight flex items-center gap-3">
+                    <i class="fa-solid fa-fire text-emerald-500"></i> Cursos Disponibles
+                </h2>
+                <p class="text-slate-400 text-xs sm:text-sm mt-1">Haz clic en cualquier curso para desplegar todos sus datos, temario y profesor</p>
+            </div>
+            <span id="courseCount" class="self-start sm:self-auto text-xs font-bold bg-emerald-950 text-emerald-400 border border-emerald-500/30 px-4 py-2 rounded-xl">
+                Cargando catálogo...
+            </span>
+        </div>
 
-// Guardar nuevo módulo subido por el admin
-document.getElementById("addModuleForm").addEventListener("submit", function(event) {
-  event.preventDefault();
+        <!-- Grid de Cursos -->
+        <div id="coursesGrid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+            <!-- Cursos generados dinámicamente -->
+        </div>
 
-  const title = document.getElementById("newTitle").value.trim();
-  const description = document.getElementById("newDesc").value.trim();
-  const source = document.getElementById("videoSource").value;
-  const submitBtn = document.getElementById("submitModuleBtn");
+        <!-- Mensaje sin resultados -->
+        <div id="noResults" class="hidden text-center py-20 bg-dark-900/50 rounded-3xl border border-slate-800 my-8">
+            <i class="fa-solid fa-folder-open text-6xl text-slate-700 mb-4"></i>
+            <h3 class="text-xl font-bold text-slate-300">No encontramos resultados</h3>
+            <p class="text-slate-500 text-sm mt-2">Prueba buscando con otra palabra o borrando los filtros.</p>
+        </div>
+    </main>
 
-  if (!title || !description) {
-    alert("Por favor completa el título y la descripción.");
-    return;
-  }
+    <!-- MODAL DETALLES DEL CURSO (SUPER COMPLETO) -->
+    <div id="courseDetailModal" class="fixed inset-0 bg-black/80 backdrop-blur-md z-50 hidden flex items-center justify-center p-3 sm:p-6 overflow-y-auto custom-scrollbar">
+        <div class="bg-dark-900 rounded-3xl max-w-3xl w-full border border-slate-800 shadow-2xl relative my-auto overflow-hidden">
+            <!-- Botón Cerrar -->
+            <button onclick="closeCourseModal()" class="absolute top-4 right-4 z-20 bg-dark-950/80 hover:bg-emerald-500 text-slate-400 hover:text-black w-10 h-10 rounded-full flex items-center justify-center border border-slate-700 transition">
+                <i class="fa-solid fa-xmark text-lg"></i>
+            </button>
 
-  if (source === "file") {
-    const fileInput = document.getElementById("newVideoFile");
-    const file = fileInput.files[0];
+            <div id="courseModalContent" class="max-h-[90vh] overflow-y-auto custom-scrollbar">
+                <!-- Se llena con JS -->
+            </div>
+        </div>
+    </div>
 
-    if (!file) {
-      alert("Por favor selecciona un archivo de video.");
-      return;
-    }
+    <!-- Footer -->
+    <footer class="bg-dark-950 text-slate-500 py-12 border-t border-slate-800/80 mt-auto">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex flex-col md:flex-row justify-between items-center gap-6">
+                <div class="flex items-center space-x-3">
+                    <div class="bg-emerald-500 text-black font-black text-lg p-2.5 rounded-xl">
+                        R7
+                    </div>
+                    <div>
+                        <span class="text-lg font-black text-white block leading-none">R7 ACADEMY</span>
+                        <span class="text-xs text-emerald-400">Academia Lider en Cursos Online</span>
+                    </div>
+                </div>
+                <p class="text-xs text-center md:text-left text-slate-400">
+                    © 2026 R7 ACADEMY. Inscripciones inmediatas vía WhatsApp: 
+                    <a href="https://wa.me/18294379911" target="_blank" class="text-emerald-400 font-bold hover:underline">+1 (829) 437-9911</a>
+                </p>
+                <div class="flex space-x-3">
+                    <a href="https://wa.me/18294379911" target="_blank" class="w-10 h-10 rounded-xl bg-dark-900 border border-slate-800 text-emerald-400 hover:bg-emerald-500 hover:text-black flex items-center justify-center transition">
+                        <i class="fa-brands fa-whatsapp text-lg"></i>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </footer>
 
-    submitBtn.disabled = true;
-    submitBtn.textContent = "⏳ Procesando y guardando video...";
+    <!-- Lógica de la Aplicación -->
+    <script>
+        const WHATSAPP_NUMBER = "18294379911";
 
-    const reader = new FileReader();
-    reader.onload = function(e) {
-      const videoDataUrl = e.target.result;
+        // Base de Datos Detallada de Cursos
+        const courses = [
+            {
+                id: 1,
+                title: "CREAR VIDEO CON IA PARA LAS REDES ",
+                category: "video con ia",
+                level: "Principiante a Avanzado",
+                duration: "7 Semanas (1 Horas)",
+                rating: 4.9,
+                reviewsCount: 128,
+                price: 20,
+                badge: "MÁS VENDIDO",
+                description: "aprende hacer video con ia gratis.",
+                image: "alber.jpeg",
+                teacher: {
+                    name: "Ing. Alber Henriquez",
+                    role: "ing sistema",
+                    bio: "experiencia con ia .",
+                    photo: "alber.jpeg"
+                },
+                modules: [
+                    
+                ]
+            },
+            
+             {
+                id: 1,
+                title: "CREAR VIDEO CON IA PARA LAS REDES ",
+                category: "video con ia",
+                level: "Principiante a Avanzado",
+                duration: "7 Semanas (1 Horas)",
+                rating: 4.9,
+                reviewsCount: 128,
+                price: 20,
+                badge: "MÁS VENDIDO",
+                description: "aprende hacer video con ia gratis.",
+                image: "alber.jpeg",
+                teacher: {
+                    name: "Ing. Alber Henriquez",
+                    role: "ing sistema",
+                    bio: "experiencia con ia .",
+                    photo: "alber.jpeg"
+                },
+                modules: [
+                    
+                ]
+            },
+            
+        ];
 
-      const newMod = {
-        title: title,
-        description: description,
-        unlocked: true,
-        type: "file",
-        video: videoDataUrl
-      };
+        // Función para renderizar el catálogo de cursos
+        function renderCourses(list) {
+            const grid = document.getElementById('coursesGrid');
+            const noResults = document.getElementById('noResults');
+            const courseCount = document.getElementById('courseCount');
 
-      saveAndPublishModule(newMod, submitBtn);
-    };
+            grid.innerHTML = '';
+            courseCount.textContent = `Mostrando ${list.length} Cursos`;
 
-    reader.readAsDataURL(file);
+            if (list.length === 0) {
+                noResults.classList.remove('hidden');
+                return;
+            } else {
+                noResults.classList.add('hidden');
+            }
 
-  } else {
-    const videoUrl = document.getElementById("newVideoUrl").value.trim();
-    if (!videoUrl) {
-      alert("Por favor ingresa el enlace de YouTube.");
-      return;
-    }
+            list.forEach(course => {
+                const whatsappMsg = encodeURIComponent(
+                    `¡Hola R7 ACADEMY! Soy un nuevo estudiante interesado.\nMe quiero inscribir de inmediato al curso: "*${course.title}*"\nPrecio: $${course.price.toFixed(2)} USD.`
+                );
+                const whatsappUrl = `https://wa.me/${WHATSAPP_NUMBER}?text=${whatsappMsg}`;
 
-    const newMod = {
-      title: title,
-      description: description,
-      unlocked: true,
-      type: "youtube",
-      video: videoUrl
-    };
+                const cardHTML = `
+                    <div class="card-glass rounded-3xl overflow-hidden border border-slate-800 neon-border-hover transition-all duration-300 flex flex-col justify-between group">
+                        <div>
+                            <!-- Imagen con etiquetas -->
+                            <div class="relative h-52 overflow-hidden bg-dark-900">
+                                <img src="${course.image}" alt="${course.title}" class="w-full h-full object-cover group-hover:scale-105 transition duration-500" onerror="this.src='https://placehold.co/800x500/0f172a/10b981?text=R7+ACADEMY'">
+                                <div class="absolute inset-0 bg-gradient-to-t from-dark-950 via-transparent to-transparent opacity-90"></div>
+                                
+                                <span class="absolute top-4 left-4 bg-emerald-500 text-black text-[11px] font-black px-3 py-1 rounded-full uppercase tracking-wider shadow-neon-glow">
+                                    ${course.badge}
+                                </span>
+                                <span class="absolute top-4 right-4 bg-dark-950/80 backdrop-blur-md text-slate-300 text-xs font-bold px-3 py-1 rounded-full border border-slate-700">
+                                    ${course.category}
+                                </span>
 
-    saveAndPublishModule(newMod, submitBtn);
-  }
-});
+                                <div class="absolute bottom-3 left-4 right-4 flex justify-between items-center text-xs font-semibold text-slate-300">
+                                    <span class="flex items-center gap-1 text-yellow-400">
+                                        <i class="fa-solid fa-star"></i> ${course.rating} (${course.reviewsCount})
+                                    </span>
+                                    <span class="text-slate-400"><i class="fa-regular fa-clock text-emerald-400"></i> ${course.duration}</span>
+                                </div>
+                            </div>
 
-function saveAndPublishModule(newMod, submitBtn) {
-  modules.push(newMod);
+                            <!-- Contenido -->
+                            <div class="p-6">
+                                <h3 class="font-extrabold text-xl text-white leading-snug mb-2 group-hover:text-emerald-400 transition">
+                                    ${course.title}
+                                </h3>
+                                <p class="text-slate-400 text-xs leading-relaxed line-clamp-2 mb-6">
+                                    ${course.description}
+                                </p>
 
-  try {
-    localStorage.setItem("r7_global_modules", JSON.stringify(modules));
-  } catch (e) {
-    alert("Atención: El archivo de video es demasiado grande para ser almacenado en la memoria local del navegador. Intenta con un archivo más liviano o mediante enlace de YouTube.");
-    modules.pop();
-    submitBtn.disabled = false;
-    submitBtn.textContent = "🚀 Publicar Módulo";
-    return;
-  }
+                                <!-- Información del Profesor -->
+                                <div class="flex items-center space-x-3 p-3 rounded-2xl bg-dark-950/60 border border-slate-800">
+                                    <img src="${course.teacher.photo}" alt="${course.teacher.name}" class="w-12 h-12 rounded-full object-cover border-2 border-emerald-500" onerror="this.src='https://placehold.co/150x150/1e293b/10b981?text=Profesor'">
+                                    <div>
+                                        <p class="text-xs font-extrabold text-white">${course.teacher.name}</p>
+                                        <p class="text-[11px] text-emerald-400 font-medium">${course.teacher.role}</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
 
-  submitBtn.disabled = false;
-  submitBtn.textContent = "🚀 Publicar Módulo";
-  document.getElementById("addModuleForm").reset();
-  toggleVideoInput();
-  renderModules();
-  alert("¡Módulo subido con éxito! Todos los estudiantes podrán verlo.");
-}
+                        <!-- Footer / Acciones -->
+                        <div class="p-6 pt-0">
+                            <div class="flex items-center justify-between mb-4 pt-4 border-t border-slate-800/80">
+                                <div>
+                                    <span class="text-[10px] uppercase font-bold text-slate-500 block">Precio Especial</span>
+                                    <span class="text-2xl font-black text-white">$${course.price.toFixed(2)} <span class="text-xs font-normal text-slate-400">USD</span></span>
+                                </div>
+                                <button onclick="openCourseModal(${course.id})" class="text-xs font-extrabold text-emerald-400 hover:text-emerald-300 flex items-center gap-1 underline">
+                                    Ver Todo <i class="fa-solid fa-arrow-right text-[10px]"></i>
+                                </button>
+                            </div>
 
-function deleteModule(index) {
-  if (confirm("¿Estás seguro de que deseas eliminar este módulo?")) {
-    modules.splice(index, 1);
-    try {
-      localStorage.setItem("r7_global_modules", JSON.stringify(modules));
-    } catch (e) {}
-    renderModules();
-  }
-}
+                            <div class="grid grid-cols-2 gap-2">
+                                <button onclick="openCourseModal(${course.id})" class="bg-dark-900 hover:bg-slate-800 text-slate-200 text-xs font-bold py-3 px-3 rounded-xl border border-slate-700 transition text-center">
+                                    Detalles
+                                </button>
+                                <a href="${whatsappUrl}" target="_blank" rel="noopener noreferrer" 
+                                   class="bg-emerald-500 hover:bg-emerald-400 text-black text-xs font-extrabold py-3 px-3 rounded-xl flex items-center justify-center space-x-1.5 shadow-neon-glow transition text-center">
+                                    <i class="fa-brands fa-whatsapp text-base"></i>
+                                    <span>Unir al Curso</span>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                `;
+                grid.innerHTML += cardHTML;
+            });
+        }
 
-function renderModules() {
-  const grid = document.getElementById("moduleGrid");
-  grid.replaceChildren();
+        // Mostrar Modal con TODOS los datos del Curso
+        function openCourseModal(courseId) {
+            const course = courses.find(c => c.id === courseId);
+            if (!course) return;
 
-  if (modules.length === 0) {
-    const emptyMsg = document.createElement("p");
-    emptyMsg.textContent = "📂 No hay módulos subidos todavía. El administrador publicará las clases pronto.";
-    grid.appendChild(emptyMsg);
-    updateProgress();
-    return;
-  }
+            const whatsappMsg = encodeURIComponent(
+                `¡Hola R7 ACADEMY! Soy un nuevo estudiante interesado.\nQuiero unirme e inscribirme al curso: "*${course.title}*"\nPrecio: $${course.price.toFixed(2)} USD.`
+            );
+            const whatsappUrl = `https://wa.me/${WHATSAPP_NUMBER}?text=${whatsappMsg}`;
 
-  modules.forEach((module, index) => {
-    const card = document.createElement("article");
-    card.className = "card";
+            // Render de la lista del temario
+            const modulesList = course.modules.map((mod, index) => `
+                <li class="flex items-start gap-3 p-3 rounded-xl bg-dark-950 border border-slate-800 text-xs text-slate-300">
+                    <span class="bg-emerald-500/10 text-emerald-400 font-extrabold text-xs px-2.5 py-1 rounded-lg border border-emerald-500/20">Mód ${index + 1}</span>
+                    <span class="pt-0.5">${mod}</span>
+                </li>
+            `).join('');
 
-    const icon = document.createElement("div");
-    icon.className = "card-icon";
-    icon.textContent = "📗";
+            const modalContent = document.getElementById('courseModalContent');
+            modalContent.innerHTML = `
+                <!-- Encabezado con foto de portada -->
+                <div class="relative h-64 sm:h-72">
+                    <img src="${course.image}" alt="${course.title}" class="w-full h-full object-cover">
+                    <div class="absolute inset-0 bg-gradient-to-t from-dark-900 via-dark-900/60 to-transparent"></div>
+                    <div class="absolute bottom-6 left-6 right-6">
+                        <span class="bg-emerald-500 text-black text-xs font-black px-3 py-1 rounded-full uppercase tracking-wider mb-2 inline-block shadow-neon-glow">
+                            ${course.category} • ${course.badge}
+                        </span>
+                        <h2 class="text-2xl sm:text-3xl font-black text-white leading-tight">${course.title}</h2>
+                    </div>
+                </div>
 
-    const title = document.createElement("h3");
-    title.textContent = module.title;
+                <!-- Cuerpo del Modal -->
+                <div class="p-6 sm:p-8 space-y-8">
+                    <!-- Ficha Técnica Rápida -->
+                    <div class="grid grid-cols-2 sm:grid-cols-4 gap-3 p-4 rounded-2xl bg-dark-950 border border-slate-800 text-center">
+                        <div>
+                            <span class="text-[10px] text-slate-500 uppercase font-bold block">Duración</span>
+                            <span class="text-xs font-extrabold text-white">${course.duration}</span>
+                        </div>
+                        <div>
+                            <span class="text-[10px] text-slate-500 uppercase font-bold block">Nivel</span>
+                            <span class="text-xs font-extrabold text-white">${course.level}</span>
+                        </div>
+                        <div>
+                            <span class="text-[10px] text-slate-500 uppercase font-bold block">Calificación</span>
+                            <span class="text-xs font-extrabold text-yellow-400"><i class="fa-solid fa-star"></i> ${course.rating} / 5</span>
+                        </div>
+                        <div>
+                            <span class="text-[10px] text-slate-500 uppercase font-bold block">Modalidad</span>
+                            <span class="text-xs font-extrabold text-emerald-400">Online Directo</span>
+                        </div>
+                    </div>
 
-    const description = document.createElement("p");
-    description.textContent = module.description;
+                    <!-- Descripción General -->
+                    <div>
+                        <h4 class="text-sm font-extrabold text-slate-200 uppercase tracking-wider mb-2 flex items-center gap-2">
+                            <i class="fa-solid fa-align-left text-emerald-400"></i> Sobre este Curso
+                        </h4>
+                        <p class="text-slate-300 text-sm leading-relaxed">${course.description}</p>
+                    </div>
 
-    const status = document.createElement("p");
-    status.className = "status available";
-    status.textContent = completed.includes(index) ? "✅ Módulo completado" : "🟢 Disponible";
+                    <!-- Ficha completa del Profesor -->
+                    <div class="p-5 rounded-2xl bg-dark-950 border border-emerald-500/30">
+                        <h4 class="text-xs font-extrabold text-emerald-400 uppercase tracking-wider mb-4">Instructor Asignado</h4>
+                        <div class="flex flex-col sm:flex-row items-center sm:items-start gap-4">
+                            <img src="${course.teacher.photo}" alt="${course.teacher.name}" class="w-20 h-20 rounded-2xl object-cover border-2 border-emerald-500 shadow-neon-glow shrink-0">
+                            <div class="text-center sm:text-left">
+                                <h5 class="text-lg font-black text-white">${course.teacher.name}</h5>
+                                <p class="text-xs text-emerald-400 font-bold mb-2">${course.teacher.role}</p>
+                                <p class="text-xs text-slate-400 leading-relaxed">${course.teacher.bio}</p>
+                            </div>
+                        </div>
+                    </div>
 
-    const button = document.createElement("button");
-    button.textContent = "▶ Entrar al módulo";
-    button.onclick = () => openModule(index);
+                    <!-- Temario / Módulos -->
+                    <div>
+                        <h4 class="text-sm font-extrabold text-slate-200 uppercase tracking-wider mb-3 flex items-center gap-2">
+                            <i class="fa-solid fa-list-check text-emerald-400"></i> Plan de Estudio & Temario
+                        </h4>
+                        <ul class="space-y-2">
+                            ${modulesList}
+                        </ul>
+                    </div>
 
-    card.append(icon, title, description, status, button);
+                    <!-- Footer del Modal / Precio e Inscripción -->
+                    <div class="pt-6 border-t border-slate-800 flex flex-col sm:flex-row items-center justify-between gap-4">
+                        <div>
+                            <span class="text-xs text-slate-400 block">Inversión total del curso</span>
+                            <span class="text-3xl font-black text-white">$${course.price.toFixed(2)} <span class="text-xs font-medium text-slate-400">USD</span></span>
+                        </div>
 
-    // Si es el administrador (203031), mostrar opción de borrar módulo
-    if (currentUser === "203031") {
-      const deleteBtn = document.createElement("button");
-      deleteBtn.className = "delete-btn";
-      deleteBtn.textContent = "🗑️ Eliminar Módulo";
-      deleteBtn.onclick = () => deleteModule(index);
-      card.appendChild(deleteBtn);
-    }
+                        <a href="${whatsappUrl}" target="_blank" rel="noopener noreferrer"
+                           class="w-full sm:w-auto bg-emerald-500 hover:bg-emerald-400 text-black font-black py-4 px-8 rounded-2xl flex items-center justify-center space-x-3 shadow-neon-glow transition transform active:scale-95 text-base">
+                            <i class="fa-brands fa-whatsapp text-2xl"></i>
+                            <span>Unir al Curso por WhatsApp</span>
+                        </a>
+                    </div>
+                </div>
+            `;
 
-    grid.appendChild(card);
-  });
+            document.getElementById('courseDetailModal').classList.remove('hidden');
+        }
 
-  updateProgress();
-}
+        function closeCourseModal() {
+            document.getElementById('courseDetailModal').classList.add('hidden');
+        }
 
-function openModule(index) {
-  const module = modules[index];
-  if (!module) return;
+        // Filtro de Búsqueda y Categorías
+        function filterCourses() {
+            const searchTerm = document.getElementById('searchInput').value.toLowerCase();
+            const selectedCategory = document.getElementById('categoryFilter').value;
 
-  selectedModule = index;
-  document.getElementById("lessonSection").hidden = false;
-  document.getElementById("lessonTitle").textContent = module.title;
-  document.getElementById("lessonDescription").textContent = module.description;
+            const filtered = courses.filter(course => {
+                const matchesSearch = course.title.toLowerCase().includes(searchTerm) || 
+                                      course.description.toLowerCase().includes(searchTerm) ||
+                                      course.teacher.name.toLowerCase().includes(searchTerm);
+                
+                const matchesCategory = selectedCategory === 'all' || course.category === selectedCategory;
 
-  const area = document.getElementById("videoContainer");
-  area.replaceChildren();
+                return matchesSearch && matchesCategory;
+            });
 
-  const wrapper = document.createElement("div");
-  wrapper.className = "video-wrapper";
+            renderCourses(filtered);
+        }
 
-  if (module.type === "file") {
-    const videoElem = document.createElement("video");
-    videoElem.src = module.video;
-    videoElem.controls = true;
-    videoElem.autoplay = false;
-    wrapper.appendChild(videoElem);
-    area.appendChild(wrapper);
-  } else {
-    const videoId = getYouTubeId(module.video);
-    if (videoId) {
-      const iframe = document.createElement("iframe");
-      iframe.src = `https://www.youtube-nocookie.com/embed/${videoId}?autoplay=0&rel=0&modestbranding=1&playsinline=1`;
-      iframe.title = module.title;
-      iframe.allow = "accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share";
-      iframe.allowFullscreen = true;
-      iframe.referrerPolicy = "strict-origin-when-cross-origin";
-      wrapper.appendChild(iframe);
-      area.appendChild(wrapper);
-    } else {
-      const message = document.createElement("p");
-      message.textContent = "📹 El video estará disponible próximamente.";
-      area.appendChild(message);
-    }
-  }
-
-  const completeButton = document.getElementById("completeButton");
-  completeButton.disabled = completed.includes(index);
-  completeButton.textContent = completed.includes(index) ? "✅ Módulo completado" : "✅ Marcar como completado";
-
-  document.getElementById("lessonSection").scrollIntoView({ behavior: "smooth" });
-}
-
-function completeModule() {
-  if (currentUser === null || selectedModule === null) return;
-
-  if (!completed.includes(selectedModule)) {
-    completed.push(selectedModule);
-    try {
-      localStorage.setItem("r7_progress_" + currentUser, JSON.stringify(completed));
-    } catch (e) {}
-  }
-
-  renderModules();
-  document.getElementById("completeButton").disabled = true;
-  document.getElementById("completeButton").textContent = "✅ Módulo completado";
-  alert("¡Felicidades! Has completado este módulo.");
-}
-
-function updateProgress() {
-  const total = modules.length;
-  const done = modules.filter((m, i) => completed.includes(i)).length;
-  const percentage = total ? Math.round((done / total) * 100) : 0;
-
-  document.getElementById("progressText").textContent = `${done} de ${total} módulos completados`;
-  document.getElementById("progressPercent").textContent = `${percentage}%`;
-  document.getElementById("progressBar").style.width = `${percentage}%`;
-}
-
-function closeLesson() {
-  document.getElementById("lessonSection").hidden = true;
-  document.getElementById("videoContainer").replaceChildren();
-  selectedModule = null;
-  document.getElementById("moduleGrid").scrollIntoView({ behavior: "smooth" });
-}
-
-function logout() {
-  currentUser = null;
-  completed = [];
-  selectedModule = null;
-  document.getElementById("studentPanel").hidden = true;
-  document.getElementById("loginScreen").hidden = false;
-  document.getElementById("password").value = "";
-  document.getElementById("lessonSection").hidden = true;
-  document.getElementById("videoContainer").replaceChildren();
-  window.scrollTo(0, 0);
-}
-</script>
-
+        // Inicialización al cargar la página
+        window.onload = function() {
+            renderCourses(courses);
+        };
+    </script>
 </body>
 </html>
